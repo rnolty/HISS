@@ -1,0 +1,52 @@
+#! /usr/bin/sh
+
+# first insertion creates the database 'HISS' and creates the collection 'admin'
+/usr/bin/mongo << EOF
+   use HISS
+   db.admin.insertOne( { name: 'itemTypes', value: ['Calendar', 'Todo', 'Contact', 'Location', 'Jot']} )
+   db.admin.insertOne( { name: 'typeProperties', value : {
+                           Calendar: {url: "/images/calendar_30x30.png"},
+                           Todo: {url: "/images/todo_30x30.png"},
+                           Contact: {url: "/images/contact_30x30.png"},
+                           Location: {url: "/images/location_30x30.png"},
+                           Note: {url: "/images/note_30x30.png"}
+                       } } )
+   db.admin.insertOne( { name: 'peopleProperties', value: {
+                            Bob: {color: "#FF4444", initials: "BN"},
+                            Anne: {color: "#44FF44", initials: "AN"} } } )
+   db.admin.insertOne( { name: 'typeDetailsTemplates', value: {
+                            Calendar: {
+                               title: "Calendar Details",
+			       className: "CalendarItemDetails",
+			       fields: [
+			           {field: "location", type: "string", label: "Location", br: true},
+				   {field: "startTime",type: "Date", label: "Start Time", includeTime: true},
+				   {field: "endTime", type: "Date", label: "End Time", includeTime: true, br: true},
+			           {field: "note", type: "string", label: "Note"}
+                               ]
+                            },
+                            Todo: {
+                               title: "Todo Details",
+                               className: "TodoItemDetails",
+                               fields: [
+                                  {field: "done", type: "boolean", label: "Done"},
+                                  {field: "timeFrame", type: "choice", label: "Time Frame",
+				      choices: [{value: "ASAP", text: "ASAP"},
+                                                {value: "days", text: "A few days"},
+                                                {value: "someday", text: "Some day"},
+                                                {value: "dueDate", text: "Specific date"}]},
+                                  {field: "dueDate", type: "Date", label: "Due Date"},
+                                  {field: "ifOverdue", type: "choice", label: "If Overdue",
+                                      choices: [{value: "P1", text: "Hair on Fire"},{value: "P2", text: "Due next day"},
+                                                {value: "P3", text: "Fugeddaboutit"}]
+                                  },
+                                  {field: "recur", type: "choice", label: "Recurs",
+                                     choices: [{value: "None", text: "One Off"}, {value: "Daily", text: "Daily"},
+                                               {value: "Weekdays", text: "Weekdays"}, {value: "Weekly", text:"Weekly"},
+                                               {value: "Biweekly", text: "Every 2 weeks"},{value: "DateOfMonth", text:"Monthly (by Date)"},
+                                               {value: "WeekOfMonth", text: "Monthly (by Day of Week)"},
+                                               {value: "Quarterly", text: "Quarterly"}, {value: "Annually", text: "Annually"}
+                                     ]
+                                  },
+                            ] } } } )
+EOF

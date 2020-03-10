@@ -1,0 +1,3 @@
+{ 
+  presets: [ ["env", {target: {"firefox": 50, "chrome": 50}}], "stage-3" ],
+}

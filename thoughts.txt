@@ -1,0 +1,106 @@
+<-------- STATE -------->
+
+I) All the items, tags, user data, etc. that have been downloaded from the server
+
+II) The view type -- calendar, todo-list, home page, ....
+
+III) Filter criteria
+
+IV) User preferences
+
+V) Countless niggling details
+ . Is AJAX pending? (and for what?)
+ . Drag and drop?
+ . Is a new item being created, or old item being edited?
+ . Is a new tag being created, or old tag being edited?
+ . Is sidebar visible?
+ . Is a relationship being edited?
+
+
+
+
+
+
+
+<-------- ACTIONS -------->
+
+CHANGE_PAGE page_type
+
+CHANGE_CALENDAR_VIEW calendar_view_type
+
+CREATE_NEW_ITEM type  (Calendar, Todo, etc.)
+    If user is creating a calendar item for a specific day, should
+    the date be communicated into this action?  Should that be a
+    separate action?
+
+
+SAVE_NEW_ITEM item
+
+EDIT_ITEM id
+
+CREATE_NEW_TAG
+
+SAVE_NEW_TAG tag
+
+EDIT_TAG id
+
+REPARENT TAG childID, parentID
+
+ADD_TO_LIST key id    (state has a dict of lists - navbar, calendar day, ...)
+
+REMOVE_FROM_LIST key id
+
+ATTACH_RELATIONS id    (a JS object is updated with references to its relations)
+
+DETACH_RELATIONS id
+
+FILTER_LIST key criteria
+
+
+
+
+
+
+
+<-------- COMPONENTS -------->
+
+Page
+   Calendar Page
+      Month View
+         Lists 1-31
+      Week View
+         Lists 1-7
+      Day View
+         List
+   Todo Page
+      Timeframe Todo List
+      Due Date Todo List
+   Main Page
+   Explore Page
+   Custom Page
+   Sidebar
+
+Item
+   An item can be displayed in many contexts -- calendar list, todo
+   list, sidebar, ....   Should it display all the aspects all the
+   time and let CSS determine what people see?  Or sense its context
+   and display aspects accordingly?
+
+ItemList
+   Different kinds with different aspects to show
+   {id: {'item': ..., 'display': {details: true, linkList: id}}
+
+AllItemLists
+   {guid: ItemList}
+
+AllItems
+   {id: {a: 1, b: 2}}
+
+TagHierarchy
+   Tag
+   Tag
+      Tag
+   Tag
+
+A given tag element will be passed an array of indices: [2,1] means
+first child of second child of TagHierarchy
