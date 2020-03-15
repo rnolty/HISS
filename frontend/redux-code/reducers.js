@@ -30,7 +30,13 @@ function deleteItem(state, action) {
     return {...state, allItems: copyItems};
 }
 
+function createList(state, action) {
+    // this is just for the app, no need to communicate with server
+    theList = action.theList.items ? action.theList.items : [];
+    tmp = {}
+    tmp[action.theList.id] = theList;
+    return {...state, allLists: Object.assign(tmp, state.allLists)};
+}
+var reducers = {addItem, createNewItem, saveNewItem, changeItem, deleteItem, createList};
 
-var actions = {addItem, createNewItem, saveNewItem, changeItem, deleteItem};
-
-export default actions;
+export default reducers;

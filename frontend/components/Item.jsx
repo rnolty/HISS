@@ -1,6 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+class ItemList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        
+    } // render
+} // class ItemList
+
+
 class Item extends React.Component {
     constructor(props) {
         super(props);
@@ -30,8 +41,8 @@ class Item extends React.Component {
 } // class Item
 
 
-function mapStateToProps(state) {      // state is the redux global state object
-    return {item: state.allItems[1]};
+function ItemMapStateToProps(state, ownProps) {      // state is the redux global state object
+    return {item: state.allItems[ownProps.id]};
 }
 
-export default connect(mapStateToProps)(Item);
+export default connect(ItemMapStateToProps)(Item);

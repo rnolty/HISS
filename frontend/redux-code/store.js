@@ -1,7 +1,7 @@
 // HISS store
 // nolty 201909
 
-import actions from './actions';
+import reducers from './reducers';
 import consts from './consts';
 import { createStore } from 'redux';
 
@@ -16,6 +16,9 @@ import { createStore } from 'redux';
 //
 //    all_users:
 //       {...}
+//
+//    all_lists:       # itemList components have a key for what list they should display
+//       {key: [id, id, id]}
 //
 //    fetchStatus:
 //       {currentlyFetching: true/false,
@@ -47,11 +50,11 @@ import { createStore } from 'redux';
 
 
 
-
 var initialState = {
     allItems: {},
     allTags: {},
     allUsers: {},
+    allLists: {},
     fetchStatus: {
         currentlyFetching: false,
         errorMessage: undefined,
@@ -61,7 +64,7 @@ var initialState = {
     page: {
         calendarPage: undefined,
         todoPage: undefined,
-        mainPage: undefined,
+//        mainPage: undefined,
         explorePage: undefined,
         customPage: undefined
     },
@@ -81,7 +84,13 @@ var initialState = {
 function reducer(state = initialState, action) {
     switch (action.type) {
         case consts.ADD_ITEM:
+        {
            return actions.addItem(state, action);
+        }
+        case consts.CREATE_LIST:
+        {
+            return actions.createList(state, action);
+        }
     }
     console.log('reducer called with action',action,'; new state:', state);
 
@@ -104,6 +113,26 @@ store.dispatch({type: consts.ADD_ITEM,
                       }
                }
               );
+
+store.dispatch({type: consts.ADD_ITEM,
+                item: {id: 2,
+                       header: {
+                           id: 2,
+                           name: "Anne",
+                           type: "Calendar Item"
+                       }
+                      }
+               }
+              );
+
+store.dispatch({type: consts.CREATE_LIST,
+                theList: {
+                    id: 1,
+                    items: [1,2]
+                }
+               }
+              );
+
 console.log("...done");
 
 

@@ -15,7 +15,7 @@ export default class App extends React.Component {
                 </div>
                 <div className="Main">
                     Hello there from App.jsx
-                    <Item/>
+                    <Item id={1}/>
                 </div>
             </div>
         );
